@@ -162,6 +162,10 @@ contains
     ! Allow over-writing of this via the optional input below
     if (trim(get_field_axis_ref(name)) == "monthly_climatology") then
       self%yearly = .true.
+    ! Support files that include two monthly time levels only
+    else if (trim(get_field_axis_ref(name)) == "two_time_axis") then
+      self%yearly = .true.
+      self%window_size = 2
     else
       self%yearly = .false.
     end if
