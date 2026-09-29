@@ -241,6 +241,14 @@ contains
     call xios_is_defined_field_attr(unique_id, grid_ref=has_grid)
     if (has_grid) then
        call xios_get_field_attr(unique_id, grid_ref=grid_ref)
+
+       !! Fix: Sanitize internal XIOS3 reference prefixes
+       if (index(adjustl(grid_ref), "--> __grid_") == 1) then
+          grid_ref = ""
+       else if (index(adjustl(grid_ref), "--> ") == 1) then
+          grid_ref = grid_ref(6:)
+       end if
+       !! End Fix
     else
        grid_ref = ""
     end if
